@@ -6,15 +6,57 @@ describe UsersController do
   
   describe "GET 'new'" do
     
-    it "should be successful" do
+    before(:each) do
       get :new
+    end
+    
+    it "should be successful" do
       response.should be_success
     end
     
     it "should have the right title" do
-      get :new
       response.should have_selector("title",
         :content => "Sign up")
+    end
+    
+    describe "Sign up form" do
+
+      it "should have a name field" do
+        response.should have_selector("input", 
+        {
+          :id => "user_name", 
+          :type => 'text', 
+          :name => 'user[name]'
+        })
+      end
+
+      it "should have an email field" do
+        response.should have_selector("input", 
+        {
+          :id => "user_email", 
+          :type => 'text', 
+          :name => 'user[email]'
+        })
+      end
+
+      it "should have a password field" do
+        response.should have_selector("input", 
+        {
+          :id => "user_password", 
+          :type => 'password', 
+          :name => 'user[password]'
+        })
+      end
+
+      it "should have a password confirmation field" do
+        response.should have_selector("input", 
+        {
+          :id => "user_password_confirmation", 
+          :type => 'password', 
+          :name => 'user[password_confirmation]'
+        })
+      end
+
     end
   end
   
@@ -106,5 +148,6 @@ describe UsersController do
     end
 
   end
+  
 
 end
