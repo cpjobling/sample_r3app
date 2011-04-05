@@ -121,6 +121,16 @@ describe UsersController do
         response.should render_template('new')
       end
       
+      it "should clear the password field" do
+        post :create, :user =>@attr.merge(:password => "foobar", :password_confirmation => "fuzzbar")
+        response.should have_selector("input[name='user[password]'][type='password']", :value=>"")
+      end
+      
+      it "should clear the password confirmation field" do
+        post :create, :user =>@attr.merge(:password => "foobar", :password_confirmation => "fuzzbar")
+        response.should have_selector("input[name='user[password_confirmation]'][type='password']", :value=>"")
+      end
+      
     end
     
     describe "success" do
