@@ -172,13 +172,13 @@ describe UsersController do
     
     it "should have the right title" do
       get :edit, :id => @user
-      response.should have_selector("title", :content => "Edit profile")
+      response.should have_selector("title", :content => "Edit Profile")
     end
     
     it "should have a link to change the Gravatar" do
       get :edit, :id => @user
       gravatar_url = "http://gravatar.com/emails"
-      esponse.should have_selector("a", :href=> gravatar_url, :content => "change")
+      response.should have_selector("a", :href=> gravatar_url, :content => "change")
     end
   end
     
@@ -188,9 +188,48 @@ describe UsersController do
       test_sign_in(@user)
     end
     
-    describe "failure"
+    describe "failure" do
+      before(:each) do
+        @attr = { :email => "", :name => "", :password => "", :password_confirmation => "" }
+      end
       
-    describe "sucesss"
+      it "should render the 'edit' page" do
+        put :update, :id => @user, :user => @attr
+        response.should render_template('edit')
+      end
+      
+      it "should have the right title" do
+        put :update, :id => @user, :user => @attr
+        response.should have_selector("title", :content => "Edit Profile")
+      end
+      
+    end
+    
+      
+    describe "successs" do
+      
+      before(:each) do
+        @attr = { :name => "New Name", :email => "user@example.org", 
+                  :password => "barbaz", :password_confirmation => "barbaz"  }
+      end
+      
+      it "should change the user's attributes" do
+        put :update, :id => @user, :user => @attr
+        @user.reload
+        @user.name.should == @attr[:name]
+        @user.email.should == @attr[:email]
+      end
+      
+      it "should redirect to the user's show page" do
+        put :update, :id => @user, :user => @attr
+        response.should redirect_to(user_path(@user))
+      end
+      
+      it "should have a flash method" do
+        put :update, :id => @user, :user => @attr
+        flash[:success].should =~ /updated/
+      end
+    end
         
   end
 
