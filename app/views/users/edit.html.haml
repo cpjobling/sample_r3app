@@ -1,0 +1,10 @@
+%h1 Edit Profile
+
+= form_for(@user) do |f|
+  %input(name ="_method" type="hidden" value="put")
+  = render :partial => 'form', :locals => { :f => f}
+  .actions
+    = f.submit "Update"
+  %div
+    = gravatar_for @user
+    = link_to "change", "http://gravatar.com/emails", :target => "_blank"
