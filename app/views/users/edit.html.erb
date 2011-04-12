@@ -1,0 +1,14 @@
+<h1>Edit Profile</h1>
+
+<%= form_for(@user) do |f| %>
+  <input name ="_method" type="hidden" value="put" />
+  <%= render 'shared/error_messages', :object => f.object %>
+  <%= render :partial => 'form', :locals => { :f => f} %>
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+  <div>
+    <%= gravatar_for @user %>
+    <a href="http://gravatar.com/emails">change</a>
+  </div>
+<% end %>

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Users" do
 
-  describe "Sign up" do
+  describe "sign up" do
 
     describe "failure" do
       
@@ -39,6 +39,7 @@ describe "Users" do
   end
   
   describe "sign in/sign out" do
+
     describe "failure" do
       it "should not sign a user in" do
         invalid_user = Factory(:user)
